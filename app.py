@@ -1,5 +1,6 @@
 import json
-from flask import Flask, render_template
+import sqlite3 as sql
+from flask import Flask
 import requests
 
 
@@ -24,8 +25,28 @@ def get_product_client_id(id):
     customers_data = get_client_by_id(id)
     return json.dumps(customers_data["orders"])
 
+@app.route("/customers")
+def post_customers():
+    con = sql.connect("msprDev")
+    con.row_factory = sql.Row
+
+    cur = con.cursor()
+    cur.execute("SELECT * from Customer")
+
+    rows = cur.fetchall(); 
+    return json.dumps([dict(ix) for ix in rows])
 
 
+@app.route("/products")
+def post_products():
+    con = sql.connect("msprDev")
+    con.row_factory = sql.Row
+
+    cur = con.cursor()
+    cur.execute("SELECT * from Product")
+
+    rows = cur.fetchall(); 
+    return json.dumps([dict(ix) for ix in rows])
 
 
 
