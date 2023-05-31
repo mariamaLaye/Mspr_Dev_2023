@@ -90,14 +90,16 @@ def json_to_customer(customer_json):
   
     if type(customer_json['address']) is str:
         res.set_street(customer_json['address'])
+        res.set_city("no city")
+        res.set_postal_code("no postal code") 
     elif type(customer_json['address']) is dict:      
         try:
             res.set_city(customer_json['address']['city'])
         except:
-            res.set_city("non saisie") 
+            res.set_city("no city") 
         try:       
             res.set_postal_code(customer_json['address']['postalCode']) 
         except:
             res.set_postal_code("no postal code")          
-    
+        res.set_street("no street")
     return res

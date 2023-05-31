@@ -3,7 +3,6 @@ import sqlite3 as sql
 from flask import Flask
 import requests
 
-
 app = Flask(__name__)
 
 
@@ -34,8 +33,7 @@ def post_customers():
     cur.execute("SELECT * from Customer")
 
     rows = cur.fetchall(); 
-    return json.dumps([dict(ix) for ix in rows])
-
+    return json.dumps([dict(customer) for customer in rows])
 
 @app.route("/products")
 def post_products():
@@ -46,16 +44,7 @@ def post_products():
     cur.execute("SELECT * from Product")
 
     rows = cur.fetchall(); 
-    return json.dumps([dict(ix) for ix in rows])
-
-
-
-
-
-
-
-
-
+    return json.dumps([dict(products) for products in rows])
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')
