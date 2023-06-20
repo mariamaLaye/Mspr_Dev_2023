@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                // Get some   code from a GitHub repository
+                // Get some code from a GitHub repository
                  git 'https://github.com/mariamaLaye/Mspr_Dev_2023.git'
 
                 // To run Maven on a Windows agent, use
