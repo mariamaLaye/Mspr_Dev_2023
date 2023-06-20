@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                 // To run Maven on a Windows agent, use
+                 // To run Maven 1  on a Windows agent, use
                  git 'https://github.com/mariamaLaye/Mspr_Dev_2023.git'
                 
                 bat "mvn -Dmaven.test.failure.ignore=true compile package"
