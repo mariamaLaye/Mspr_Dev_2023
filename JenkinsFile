@@ -15,7 +15,7 @@ pipeline {
                     // Create a virtual environment
                     sh 'python -m venv venv'
                     
-                    // Activate the virtual environment
+                    // Activate the virtual environment test 
                     sh 'source venv/bin/activate'
                     
                     // Install project dependencies
