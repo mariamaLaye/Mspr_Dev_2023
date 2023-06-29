@@ -34,7 +34,7 @@ pipeline {
                     sh 'source venv/bin/activate'
                     
                     // Run any compile commands you may have
-                    sh 'python -m py_compile customer.py'
+                    sh 'python -m py_compile Customer.py'
                 }
             }
         }
