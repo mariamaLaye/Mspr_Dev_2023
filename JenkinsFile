@@ -22,7 +22,7 @@ pipeline {
                     sh 'pip install -r requirements.txt'
                     
                     // Run any build commands you may have
-                    sh 'python setup.py build'
+                    sh 'python Customer.py build'
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
                     sh 'source venv/bin/activate'
                     
                     // Run any compile commands you may have
-                    sh 'python setup.py compile'
+                    sh 'python Customer.py compile'
                 }
             }
         }
