@@ -8,6 +8,24 @@ pipeline {
                 git 'https://github.com/mariamaLaye/Mspr_Dev_2023.git'
             }
         }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Create a virtual environment
+                    sh 'python -m venv venv'
+                    
+                    // Activate the virtual environment test 
+                    sh 'source venv/bin/activate'
+                    
+                    // Install project dependencies
+                    sh 'pip install -r requirements.txt'
+                    
+                    // Run any build commands you may have
+                    sh 'python setup.py build'
+                }
+            }
+        }
         
         stage('Compile') {
             steps {
