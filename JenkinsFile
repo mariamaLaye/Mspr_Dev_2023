@@ -22,9 +22,7 @@ pipeline {
                     //sh 'pip install -r requirements.txt'
                     
                     // Run any build commands you may have
-                    sh 'pwd'
-                    dir ('modele')
-                    sh 'pwd'
+                    dir('modele')
                     sh 'python Customer.py build'
                 }
             }
