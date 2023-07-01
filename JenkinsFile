@@ -24,6 +24,7 @@ pipeline {
                     // Run any build commands you may have
                     sh 'pwd'
                     dir ('modele')
+                    sh 'pwd'
                     sh 'python Customer.py build'
                 }
             }
