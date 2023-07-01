@@ -12,7 +12,7 @@ pipeline {
         stage('Compile') {
             steps {
                 // Go to the modele directory
-                dir('modele') {
+                dir('modele/Customer.py') {
                     // Compile Customer.py
                     sh 'python Customer.py'
                 }
