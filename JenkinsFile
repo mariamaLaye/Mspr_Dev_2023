@@ -1,44 +1,22 @@
-
 pipeline {
     agent any
-
+    
     stages {
         stage('Checkout') {
             steps {
+                // Clone the repository
                 git 'https://github.com/mariamaLaye/Mspr_Dev_2023.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                script {
-                    // Create a virtual environment
-                    sh 'python -m venv venv'
-                    
-                    // Activate the virtual environment test 
-                    sh 'source venv/bin/activate'
-                    
-                    // Install project dependencies
-                    //sh 'pip install -r requirements.txt'
-                    
-                    // Run any build commands you may have
-                    dir('modele')
-                    sh 'python Customer.py build'
-                }
             }
         }
         
         stage('Compile') {
             steps {
-                script {
-                    // Activate the virtual environment
-                    sh 'source venv/bin/activate'
-                    
-                    // Run any compile commands you may have
-                    sh 'python -m py_compile Customer.py'
+                // Go to the modele directory
+                dir('modele') {
+                    // Compile Customer.py
+                    sh 'python Customer.py'
                 }
             }
         }
     }
 }
-
