@@ -19,7 +19,7 @@ pipeline {
                     sh 'source venv/bin/activate'
                     
                     // Install project dependencies
-                    sh 'pip install -r requirements.txt'
+                    //sh 'pip install -r requirements.txt'
                     
                     // Run any build commands you may have
                     dir('modele')
