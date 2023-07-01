@@ -22,7 +22,7 @@ pipeline {
                     //sh 'pip install -r requirements.txt'
                     
                     // Run any build commands you may have
-                    dir('modele')
+                    dir('https://github.com/mariamaLaye/Mspr_Dev_2023/blob/5794493973e4df43cbbfe6b7d343c3112ced7dcc/modele')
                     sh 'python Customer.py build'
                 }
             }
