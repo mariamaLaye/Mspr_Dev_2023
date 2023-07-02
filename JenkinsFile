@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023.git'
+                bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023   .git'
             }
         }
         
@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Change to the directory where your Python files reside
-                    dir('Mspr_Dev_2023/modele') {
+                    dir('modele') {
                         // Find all Python files in the directory
                         def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
                         
