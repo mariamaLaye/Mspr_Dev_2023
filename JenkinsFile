@@ -4,17 +4,28 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Clone the repository
-                git 'https://github.com/mariamaLaye/Mspr_Dev_2023.git'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
+                          userRemoteConfigs: [[url: 'https://github.com/mariamaLaye/Mspr_Dev_2023.git']]])
             }
         }
         
-        stage('Compile') {
+        stage('Build and Compile') {
             steps {
-                // Go to the modele directory
-            dir('modele') {
-                    // Compile Customer.py
-                sh 'python Customer.py'
+                script {
+                    // Change to the directory where your files reside
+                    dir('modele') {
+                        // List all files in the directory
+                        def files = sh(returnStdout: true, script: 'ls -1').trim().split('\n')
+                        
+                        // Loop through each file
+                        for (def file in files) {
+                            // Build command
+                            sh "build-command ${file}"
+                            
+                            // Compile command
+                            sh "compile-command ${file}"
+                        }
+                    }
                 }
             }
         }
