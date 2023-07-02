@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023   .git'
+                bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023.git'
             }
         }
         
