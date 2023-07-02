@@ -12,25 +12,18 @@ pipeline {
         stage('Build and Compile') {
             steps {
                 script {
-                    // Set up the virtual environment
-                    bat 'C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m venv venv'
-                    bat 'venv\\Scripts\\activate.bat' // Activate the virtual environment
-                    
                     // Change to the directory where your Python files reside
                     dir('modele') {
-                        // Install dependencies if needed
-                        bat 'pip install -r requirements.txt'
-                        
                         // Find all Python files in the directory
                         def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
                         
                         // Loop through each Python file
                         for (def file in pythonFiles) {
                             // Build command
-                            bat "python build.py ${file}"
+                            bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe build.py ${file}"
                             
                             // Compile command
-                            //bat "python -m py_compile ${file}"
+                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m py_compile ${file}"
                         }
                     }
                 }
