@@ -20,10 +20,10 @@ pipeline {
                         // Loop through each Python file
                         for (def file in pythonFiles) {
                             // Build command
-                            bat "python build.py ${file}"
+                            bat "C:\\Python310\\python.exe build.py ${file}"
                             
                             // Compile command
-                            //bat "python -m py_compile ${file}"
+                            //bat "C:\\Python310\\python.exe -m py_compile ${file}"
                         }
                     }
                 }
