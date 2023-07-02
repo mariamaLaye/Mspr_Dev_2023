@@ -13,6 +13,13 @@ pipeline {
                 script {
                     // Change to the directory where your Python files reside
                     dir('Mspr_Dev_2023/modele') {
+                        // Create and activate the virtual environment
+                        bat 'python -m venv venv'
+                        bat 'venv\\Scripts\\activate.bat'
+                        
+                        // Install required dependencies (if any)
+                        bat 'pip install -r requirements.txt'
+                        
                         // Find all Python files in the directory
                         def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
                         
@@ -24,6 +31,9 @@ pipeline {
                             // Compile command
                             bat "python -m py_compile ${file}"
                         }
+                        
+                        // Deactivate the virtual environment
+                        bat 'deactivate'
                     }
                 }
             }
