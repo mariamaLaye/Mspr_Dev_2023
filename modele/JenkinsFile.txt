@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone the repository
+                git 'https://github.com/mariamaLaye/Mspr_Dev_2023.git'
+            }
+        }
+        
+        stage('Compile') {
+            steps {
+                // Go to the modele directory
+            dir('modele') {
+                    // Compile Customer.py
+                sh 'python Customer.py'
+                }
+            }
+        }
+    }
+}
