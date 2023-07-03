@@ -19,11 +19,9 @@ pipeline {
                         
                         // Loop through each Python file
                         for (def file in pythonFiles) {
-                            // Build command
-                            //bat "C:\\python310\\python.exe build.py ${file}"
-                            bat 'echo "Compiling..."'
-                            // Compile command
-                            //bat "C:\\python310\\python.exe -m py_compile ${file}"
+                            bat 'echo "Building..."'
+                            bat "C:\\python310\\python.exe build.py ${file}"
+                            
                         }
                     }
                 }
@@ -39,10 +37,7 @@ pipeline {
                         
                         // Loop through each Python file
                         for (def file in pythonFiles) {
-                            // Build command
-                            //bat "C:\\python310\\python.exe build.py ${file}"
-                            bat 'echo "Compiling..."'
-                            // Compile command
+                           bat 'echo "Compiling..."'
                             //bat "C:\\python310\\python.exe -m py_compile ${file}"
                         }
                     }
