@@ -2,25 +2,31 @@ pipeline {
     agent any
 
     stages {
-        stage('Compile') {
+        stage('Checkout') {
             steps {
-                bat 'echo "Compiling..."'
                 bat 'rmdir /s /q Mspr_Dev_2023'
                 bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023.git'
             }
         }
-
-        stage('Checkout') {
+        
+        stage('Build and Compile') {
             steps {
-                git 'https://github.com/your-repo.git'
-                // Replace the URL with your own repository URL
-            }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'echo "Building..."'
-                // Add your build commands here
+                script {
+                    // Change to the directory where your Python files reside
+                    dir('modele') {
+                        // Find all Python files in the directory
+                        def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
+                        
+                        // Loop through each Python file
+                        for (def file in pythonFiles) {
+                            // Build command
+                            //bat "C:\\python310\\python.exe build.py ${file}"
+                            bat 'echo "Compiling..."'
+                            // Compile command
+                            //bat "C:\\python310\\python.exe -m py_compile ${file}"
+                        }
+                    }
+                }
             }
         }
     }
