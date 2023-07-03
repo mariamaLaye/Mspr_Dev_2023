@@ -9,7 +9,7 @@ pipeline {
             }
         }
         
-        stage('Build and Compile') {
+        stage('Build') {
             steps {
                 script {
                     // Change to the directory where your Python files reside
@@ -29,7 +29,7 @@ pipeline {
                 }
             }
         }
-        stage('Build and Compile') {
+        stage('Compile') {
             steps {
                 script {
                     // Change to the directory where your Python files reside
