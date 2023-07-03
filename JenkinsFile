@@ -31,5 +31,27 @@ pipeline {
                 }
             }
         }
+          stage('Build and Compile') {
+            steps {
+                script {
+                    // Change to the directory where your Python files reside
+                    dir('modele') {
+                        // Find all Python files in the directory
+                        def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
+                        
+                        // Loop through each Python file
+                        for (def file in pythonFiles) {
+                            // Build command
+                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe build.py ${file}"
+                             echo "Hello, Jenkins!"
+                            
+                            // Compile command
+                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m py_compile ${file}"
+                             echo "Hello, Jenkins!"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
