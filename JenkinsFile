@@ -4,53 +4,38 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo 'Checking out the code...'
                 bat 'rmdir /s /q Mspr_Dev_2023'
                 bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023.git'
             }
         }
-        
-        stage('Build and Compile') {
+
+        stage('Compile') {
             steps {
-                script {
+                echo 'Compiling the code...'
+                 script {
                     // Change to the directory where your Python files reside
                     dir('modele') {
                         // Find all Python files in the directory
-                        def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
+                        //def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
                         
                         // Loop through each Python file
                         for (def file in pythonFiles) {
                             // Build command
-                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe build.py ${file}"
-                             echo "Hello, Jenkins!"
+                            //bat "C:\\python310\\python.exe build.py ${file}"
                             
                             // Compile command
-                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m py_compile ${file}"
-                             echo "Hello, Jenkins!"
+                            //bat "C:\\python310\\python.exe -m py_compile ${file}"
                         }
                     }
                 }
             }
         }
-        stage('Build and Compile') {
+
+        stage('Build') {
             steps {
-                script {
-                    // Change to the directory where your Python files reside
-                    dir('modele') {
-                        // Find all Python files in the directory
-                        def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
-                        
-                        // Loop through each Python file
-                        for (def file in pythonFiles) {
-                            // Build command
-                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe build.py ${file}"
-                             echo "Hello, Jenkins!"
-                            
-                            // Compile command
-                            //bat "C:\\Users\\33624\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m py_compile ${file}"
-                             echo "Hello, Jenkins!"
-                        }
-                    }
-                }
+                echo 'Building the project...'
+                // Add your build step here
             }
         }
     }
