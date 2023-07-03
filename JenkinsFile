@@ -23,7 +23,7 @@ pipeline {
                         for (def file in pythonFiles) {
                             // Build command
                             //bat "C:\\python310\\python.exe build.py ${file}"
-                            
+                             echo 'Checking out the code...'
                             // Compile command
                             //bat "C:\\python310\\python.exe -m py_compile ${file}"
                         }
