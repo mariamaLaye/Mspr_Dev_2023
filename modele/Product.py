@@ -27,7 +27,7 @@ class Product:
         self.customer_id = new_customer_id    
     
     def __repr__(self):
-        return f'{self.id}, {self.created_at}, {self.customer_id}'
+        return f'[id={self.id}, date={self.created_at}, CustomerId={self.customer_id}]'
 
 
 def json_to_product(product_json):

@@ -4,8 +4,7 @@ class Customer:
     
     def __init__(
         self, id=str(), username=str(), firstname=str(),
-        lastname=str(), city=str(), postal_code=str(), street=str()
-        ):
+        lastname=str(), city=str(), postal_code=str(), street=str()):
         
         self.id = id
         self.username = username
@@ -60,8 +59,8 @@ class Customer:
         self.street = new_street    
     
     def __repr__(self):
-        return f'{self.id}, {self.username}, {self.firstname}, \
-            {self.lastname}, {self.city}, {self.postal_code}, {self.street}'
+        return f'[id={self.id}, username={self.username}, firstname={self.firstname}, \
+            lastname={self.lastname}, city={self.city}, postal code={self.postal_code}, street={self.street}]'
             
                   
 def json_to_customer(customer_json):

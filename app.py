@@ -2,6 +2,8 @@ import json
 import sqlite3 as sql
 from flask import Flask
 import requests
+from db.CustomerDB import CustomerDB
+from db.ProductDB import ProductDB
 
 app = Flask(__name__)
 
@@ -19,32 +21,33 @@ def get_client_by_id(id):
     data = response.json()
     return data
 
-@app.route("/<id>/products")
-def get_product_client_id(id):
-    customers_data = get_client_by_id(id)
-    return json.dumps(customers_data["orders"])
+@app.route("/customers/<id>/")
+def get_client_id(id):
+    con = sql.connect("msprDev")
+    customer_db = CustomerDB(None, con)
+    customer_datas = customer_db.get_customer(id) 
+    return customer_datas
 
 @app.route("/customers")
-def post_customers():
+def get_customers():
     con = sql.connect("msprDev")
-    con.row_factory = sql.Row
-
-    cur = con.cursor()
-    cur.execute("SELECT * from Customer")
-
-    rows = cur.fetchall(); 
-    return json.dumps([dict(customer) for customer in rows])
+    custome_db = CustomerDB(None, con)
+    rows = custome_db.get_all_customers()    
+    return rows
 
 @app.route("/products")
-def post_products():
+def get_products():
+    con = sql.connect('msprDev')
+    product_db = ProductDB(None, con)
+    rows = product_db.get_all_products() 
+    return rows
+
+@app.route("/products/<id>")
+def get_product_by_id(id):
     con = sql.connect("msprDev")
-    con.row_factory = sql.Row
-
-    cur = con.cursor()
-    cur.execute("SELECT * from Product")
-
-    rows = cur.fetchall(); 
-    return json.dumps([dict(products) for products in rows])
+    product_db = ProductDB(None, con)
+    product_datas = product_db.get_product(id) 
+    return product_datas
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')
