@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                bat 'rmdir /s /q Mspr_Dev_2023'
+                bat 'git clone https://github.com/mariamaLaye/Mspr_Dev_2023.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    // Change to the directory where your Python files reside
+                    dir('modele') {
+                        // Find all Python files in the directory
+                        def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
+                        
+                        // Loop through each Python file
+                        for (def file in pythonFiles) {
+                            // Build command
+                            bat "C:\\python310\\python.exe build.py ${file}"
+                        }
+                    }
+                }
+            }
+        }
+         stage(Compile') {
+                    steps {
+                        script {
+                            // Change to the directory where your Python files reside
+                            dir('modele') {
+                                // Find all Python files in the directory
+                                def pythonFiles = bat(script: 'dir /b /s *.py', returnStdout: true).trim().split('\r\n')
+                                
+                                // Loop through each Python file
+                                for (def file in pythonFiles) {  
+                                    // Compile command
+                                    //bat "C:\\python310\\python.exe -m py_compile ${file}"
+                                }
+                            }
+                        }
+                    }
+                 }
+}
+    
+
