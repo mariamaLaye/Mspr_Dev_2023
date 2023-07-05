@@ -2,7 +2,7 @@ import random as rand
 
 
 class Product:
-    def __init__(self, created_at=str(), customer_id=str(), id=str()):
+    def __init__(self, id=str(), created_at=str(), customer_id=str()):
         self.id = id
         self.created_at = created_at
         self.customer_id = customer_id
@@ -21,7 +21,7 @@ class Product:
         self.id = new_id
     
     def set_date(self, new_date):
-        self.create_at = new_date
+        self.created_at = new_date
         
     def set_customer_id(self, new_customer_id):
         self.customer_id = new_customer_id    
@@ -31,17 +31,8 @@ class Product:
 
 
 def json_to_product(product_json):
-    res = Product()
-    
-    try:
-        res.set_id(product_json['id'])
-        res.set_date(product_json['createdAt'])
-        res.set_customer_id(product_json['customerId'])
-    except:
-        
-        random_id = str(rand.randrange(200, 300))
-        res.set_id(random_id)
-        res.set_date("null")
-        res.set_customer_id("null") 
-    
-    return res       
+    return Product(
+        product_json['id'],
+        product_json['createdAt'],
+        product_json['customerId']
+    )       
