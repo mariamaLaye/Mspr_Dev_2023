@@ -2,11 +2,11 @@ import json
 import sqlite3 as sql
 import random as rand
 
-from modele.Customer import Customer
+from models.Customer import Customer
 
 class CustomerDB:
-    def __init__(self, datas, con):
-        self.datas = datas
+    def __init__(self, data, con):
+        self.data = data
         self.con = con
         
         
@@ -14,7 +14,7 @@ class CustomerDB:
         try:
             cursor = self.con.cursor() 
             self.con.execute("DELETE FROM Customer")
-            for customer in self.datas:
+            for customer in self.data:
                 self.add_customer(json_to_customer(customer))
             self.con.commit()
         except:
@@ -29,7 +29,7 @@ class CustomerDB:
         rows = cursor.fetchall(); 
         return json.dumps([dict(customer) for customer in rows])
        
-    def get_customer(self, id):
+    def get_customer_by_id(self, id):
         try:
             self.con.row_factory = sql.Row
             cursor = self.con.cursor()
@@ -37,7 +37,6 @@ class CustomerDB:
             cursor.execute(f'SELECT * FROM Customer where id={id}')
 
             rows = cursor.fetchall(); 
-            print([dict(customer) for customer in rows])
             return json.dumps([dict(customer) for customer in rows])
         except:
             raise sql.DatabaseError("No such ID found in Customer table") 

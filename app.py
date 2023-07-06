@@ -3,16 +3,16 @@ import sqlite3 as sql
 from flask import Flask, request
 import requests
 from db.CustomerDB import CustomerDB
-from db.ProductDB import ProductDB
-from modele.Customer import json_to_customer
-from modele.Product import json_to_product
+from db.ProductDB import ProductDB, json_to_product
+from models.Customer import json_to_customer
+
 
 app = Flask(__name__)
 
 
-def get_all_datas():
+def get_all_data(data_type):
     response = requests \
-        .get("https://615f5fb4f7254d0017068109.mockapi.io/api/v1/customers/")
+        .get(f"https://615f5fb4f7254d0017068109.mockapi.io/api/v1/{data_type}/")
     data = response.json()
     return data
 
@@ -27,7 +27,7 @@ def get_customers():
     con = sql.connect("msprDev")
     customer_db = CustomerDB(None, con)
     rows = customer_db.get_all_customers()   
-    customer_db.close_con() 
+    con.close() 
     return rows
 
 @app.route("/customers/<id>/", methods=["GET"])
@@ -35,7 +35,7 @@ def get_customer_by_id(id):
     con = sql.connect("msprDev")
     customer_db = CustomerDB(None, con)
     customer_datas = customer_db.get_customer(id) 
-    customer_db.close_con()
+    con.close()
     return customer_datas
 
 @app.route("/customer/add/", methods=["POST"])
@@ -45,7 +45,6 @@ def add_customer():
     
     con = sql.connect('msprDev')
     customer_db = CustomerDB(None, con)
-    print(type(json_customer))
     customer_db.add_customer(json_to_customer(json_customer))
     con.close()
     return json_customer
@@ -84,7 +83,7 @@ def get_products():
 def get_product_by_id(id):
     con = sql.connect("msprDev")
     product_db = ProductDB(None, con)
-    product_datas = product_db.get_product(id) 
+    product_datas = product_db.get_product_by_id(id) 
     con.close()
     return product_datas
 
@@ -122,7 +121,7 @@ def delete_product(id):
 
 
 con = sql.connect('msprDev')
-product_db = ProductDB(get_all_datas(), con)
+product_db = ProductDB(get_all_data("products"), con)
 product_db.fill_product()
 
 

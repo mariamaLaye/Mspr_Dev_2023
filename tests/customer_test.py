@@ -1,44 +1,42 @@
 import unittest
-from unittest.mock import patch
-from Customer import Customer, json_to_customer
+from models.Customer import Customer, json_to_customer
 
 class TestCustomer(unittest.TestCase):
 
     def setUp(self):
         self.customer_json = {
-            "id": "1",
-            "username": "john_doe",
-            "firstName": "John",
-            "lastName": "Doe",
-            "address": {
-                "city": "New York",
-                "postalCode": "12345"
-            }
+            "id": "28",
+            "username": "Major89",
+            "firstname": "Evalyn",
+            "lastname": "Cormier",
+            "city": "Port Corene",
+            "postalCode": "55015",
+            "street": "no street"
         }
 
     def test_get_id(self):
         customer = json_to_customer(self.customer_json)
-        self.assertEqual(customer.get_id(), "1")
+        self.assertEqual(customer.get_id(), "28")
 
     def test_get_username(self):
         customer = json_to_customer(self.customer_json)
-        self.assertEqual(customer.get_username(), "john_doe")
+        self.assertEqual(customer.get_username(), "Major89")
 
     def test_get_firstname(self):
         customer = json_to_customer(self.customer_json)
-        self.assertEqual(customer.get_firstname(), "John")
+        self.assertEqual(customer.get_firstname(), "Evalyn")
 
     def test_get_lastname(self):
         customer = json_to_customer(self.customer_json)
-        self.assertEqual(customer.get_lastname(), "Doe")
+        self.assertEqual(customer.get_lastname(), "Cormier")
 
     def test_get_city(self):
         customer = json_to_customer(self.customer_json)
-        self.assertEqual(customer.get_city(), "New York")
+        self.assertEqual(customer.get_city(), "Port Corene")
 
     def test_get_postal_code(self):
         customer = json_to_customer(self.customer_json)
-        self.assertEqual(customer.get_postal_code(), "12345")
+        self.assertEqual(customer.get_postal_code(), "55015")
 
     def test_get_street(self):
         customer = json_to_customer(self.customer_json)
@@ -79,17 +77,15 @@ class TestCustomer(unittest.TestCase):
         customer.set_street("123 Main St")
         self.assertEqual(customer.get_street(), "123 Main St")
 
-    @patch('random.randrange')
-    def test_json_to_customer_with_random_id(self, mock_randrange):
-        mock_randrange.return_value = 250
+    def test_json_to_customer(self):
         customer_json = {
+            "id" : "250",
             "username": "jane_doe",
-            "firstName": "Jane",
-            "lastName": "Doe",
-            "address": {
-                "city": "Los Angeles",
-                "postalCode": "54321"
-            }
+            "firstname": "Jane",
+            "lastname": "Doe",
+            "street": "no street",
+            "city": "Los Angeles",
+            "postalCode": "54321"
         }
         customer = json_to_customer(customer_json)
         self.assertEqual(customer.get_id(), "250")

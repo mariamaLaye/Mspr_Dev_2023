@@ -1,13 +1,13 @@
 import unittest
 from unittest.mock import patch
-from product import Product, json_to_product
+from models.Product import Product, json_to_product
 
 class TestProduct(unittest.TestCase):
 
     def setUp(self):
         self.product_json = {
             "id": "1",
-            "createdAt": "2023-06-30",
+            "createdAt": "2023-02-20 04:32:34",
             "customerId": "123"
         }
 
@@ -17,7 +17,7 @@ class TestProduct(unittest.TestCase):
 
     def test_get_date(self):
         product = json_to_product(self.product_json)
-        self.assertEqual(product.get_date(), "2023-06-30")
+        self.assertEqual(product.get_date(), "2023-02-20 04:32:34")
 
     def test_get_customer_id(self):
         product = json_to_product(self.product_json)
@@ -30,20 +30,19 @@ class TestProduct(unittest.TestCase):
 
     def test_set_date(self):
         product = Product()
-        product.set_date("2023-07-01")
-        self.assertEqual(product.get_date(), "2023-07-01")
+        product.set_date("2023-07-01 10:23:09")
+        self.assertEqual(product.get_date(), "2023-07-01 10:23:09")
 
     def test_set_customer_id(self):
         product = Product()
         product.set_customer_id("456")
         self.assertEqual(product.get_customer_id(), "456")
 
-    @patch('random.randrange')
-    def test_json_to_product_with_random_id(self, mock_randrange):
-        mock_randrange.return_value = 250
+    def test_json_to_product_with_random_id(self):
         product_json = {
-            "createdAt": "2023-07-02",
-            "customerId": "789"
+            "id" : "250",
+            "createdAt": "null",
+            "customerId": "null"
         }
         product = json_to_product(product_json)
         self.assertEqual(product.get_id(), "250")
