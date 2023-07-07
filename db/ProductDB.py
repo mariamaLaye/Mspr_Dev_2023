@@ -46,7 +46,6 @@ class ProductDB():
     
     def add_product(self, product):
         cursor = self.con.cursor()
-        print(product)
         params = (
             product.id,
             product.product_date,
@@ -55,7 +54,6 @@ class ProductDB():
             product.color,
             product.stock
             )
-        print(f"INSERT INTO Product VALUES ({params[0]}, DATE('{params[1]}'), {params[2]}, '{params[3]}', '{params[4]}', {params[5]})")
         cursor.execute(f'INSERT INTO Product VALUES (?, DATE(?), ?, ?, ?, ?)', params)
         self.con.commit()
     

@@ -9,7 +9,6 @@ from db.ProductDB import ProductDB, json_to_product
 
 app = Flask(__name__)
 
-
 def get_all_data(data_type):
     response = requests \
         .get(f"https://615f5fb4f7254d0017068109.mockapi.io/api/v1/{data_type}/")
