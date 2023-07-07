@@ -62,13 +62,3 @@ class Customer:
         return f'[id={self.id}, username={self.username}, firstname={self.firstname}, \
             lastname={self.lastname}, city={self.city}, postal code={self.postal_code}, street={self.street}]'
             
-def json_to_customer(customer_json):
-    return Customer(
-        customer_json['id'],
-        customer_json['username'],
-        customer_json['firstname'],
-        customer_json['lastname'],
-        customer_json['city'],
-        customer_json['postalCode'],
-        customer_json['street']
-        )

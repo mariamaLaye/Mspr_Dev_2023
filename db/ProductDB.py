@@ -5,20 +5,9 @@ from models.Product import Product
 
 class ProductDB():
     
-    def __init__(self, data, con):
-        self.data = data
+    def __init__(self, con):
         self.con = con
     
-        
-    def fill_product(self):
-        try:    
-            cursor = self.con.cursor()
-            cursor.execute("DELETE FROM Product")
-            for i in range(len(self.data)):
-                self.add_product(json_to_product(self.data[i]))
-        except:
-            raise sql.DatabaseError("insertion in table failed")
-        self.con.commit()
      
     def get_all_products(self):
         self.con.row_factory = sql.Row
@@ -51,12 +40,13 @@ class ProductDB():
             product.stock,
             product.id
             )
-        cursor.execute(f'UPDATE Customer SET productDate=?, price=?, description=?, color=?, stock=?, \
+        cursor.execute(f'UPDATE Product SET productDate=?, price=?, description=?, color=?, stock=?\
                         WHERE id =?', params)
         self.con.commit()
     
     def add_product(self, product):
         cursor = self.con.cursor()
+        print(product)
         params = (
             product.id,
             product.product_date,
@@ -65,6 +55,7 @@ class ProductDB():
             product.color,
             product.stock
             )
+        print(f"INSERT INTO Product VALUES ({params[0]}, DATE('{params[1]}'), {params[2]}, '{params[3]}', '{params[4]}', {params[5]})")
         cursor.execute(f'INSERT INTO Product VALUES (?, DATE(?), ?, ?, ?, ?)', params)
         self.con.commit()
     
@@ -73,12 +64,23 @@ class ProductDB():
         cursor.execute(f'DELETE FROM Product WHERE id={id}')  
         self.con.commit()
 
-def json_to_product(json_product):
-    return Product(
-        json_product['id'],
-        json_product['createdAt'],
-        json_product['details']['price'],
-        json_product['details']['description'],
-        json_product['details']['color'],
-        json_product['stock']
-    )
+def json_to_product(json_product, raw=False):
+    if raw:
+        return Product(
+            json_product['id'],
+            json_product['createdAt'],
+            json_product['details']['price'],
+            json_product['details']['description'],
+            json_product['details']['color'],
+            json_product['stock']
+        )
+    else:
+        return Product(
+            json_product['id'],
+            json_product['productDate'],
+            json_product['price'],
+            json_product['description'],
+            json_product['color'],
+            json_product['stock']
+        )
+            

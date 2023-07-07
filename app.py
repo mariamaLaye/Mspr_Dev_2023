@@ -2,9 +2,9 @@ import json
 import sqlite3 as sql
 from flask import Flask, request
 import requests
-from db.CustomerDB import CustomerDB
+from db.CustomerDB import CustomerDB, json_to_customer
+from db.OrderDB import OrderDB
 from db.ProductDB import ProductDB, json_to_product
-from models.Customer import json_to_customer
 
 
 app = Flask(__name__)
@@ -25,7 +25,7 @@ def get_bytes_to_json(bytes):
 @app.route("/customers/", methods=["GET"])
 def get_customers():
     con = sql.connect("msprDev")
-    customer_db = CustomerDB(None, con)
+    customer_db = CustomerDB(con)
     rows = customer_db.get_all_customers()   
     con.close() 
     return rows
@@ -34,7 +34,7 @@ def get_customers():
 def get_customer_by_id(id):
     con = sql.connect("msprDev")
     customer_db = CustomerDB(None, con)
-    customer_datas = customer_db.get_customer(id) 
+    customer_datas = customer_db.get_customer_by_id(id) 
     con.close()
     return customer_datas
 
@@ -44,7 +44,7 @@ def add_customer():
     json_customer = get_bytes_to_json(data)
     
     con = sql.connect('msprDev')
-    customer_db = CustomerDB(None, con)
+    customer_db = CustomerDB(con)
     customer_db.add_customer(json_to_customer(json_customer))
     con.close()
     return json_customer
@@ -55,7 +55,7 @@ def update_customer():
     json_customer = get_bytes_to_json(data)
     
     con = sql.connect('msprDev')
-    customer_db = CustomerDB(None, con)
+    customer_db = CustomerDB(con)
     customer = json_to_customer(json_customer)
     customer_db.update_customer(customer)
     con.close()
@@ -64,7 +64,7 @@ def update_customer():
 @app.route("/customers/delete/<id>", methods=["DELETE"])
 def delete_customer(id):
     con = sql.connect('msprDev')
-    customer_db = CustomerDB(None, con)
+    customer_db = CustomerDB(con)
     customer_db.delete_customer(id)
     con.close()
     return f"Customer with id : {id} deleted"
@@ -74,7 +74,7 @@ def delete_customer(id):
 @app.route("/products", methods=["GET"])
 def get_products():
     con = sql.connect('msprDev')
-    product_db = ProductDB(None, con)
+    product_db = ProductDB(con)
     rows = product_db.get_all_products() 
     con.close()
     return rows
@@ -82,7 +82,7 @@ def get_products():
 @app.route("/products/<id>", methods=["GET"])
 def get_product_by_id(id):
     con = sql.connect("msprDev")
-    product_db = ProductDB(None, con)
+    product_db = ProductDB(con)
     product_datas = product_db.get_product_by_id(id) 
     con.close()
     return product_datas
@@ -93,7 +93,7 @@ def add_product():
     json_product = get_bytes_to_json(data)
     
     con = sql.connect('msprDev')
-    product_db = ProductDB(None, con)
+    product_db = ProductDB(con)
     product_db.add_product(json_to_product(json_product))
     con.close()
     return json_product
@@ -114,15 +114,28 @@ def update_product():
 @app.route("/products/delete/<id>", methods=["DELETE"])
 def delete_product(id):
     con = sql.connect('msprDev')
-    product_db = ProductDB(None, con)
+    product_db = ProductDB(con)
     product_db.delete_product(id)
     con.close()
     return f"Product with id : {id} deleted"
 
+#orders methods
+@app.route("/orders", methods=["GET"])
+def get_orders():
+    con = sql.connect("msprDev")
+    order_db = OrderDB(con)
+    rows = order_db.get_all_orders()   
+    con.close() 
+    return rows
 
-con = sql.connect('msprDev')
-product_db = ProductDB(get_all_data("products"), con)
-product_db.fill_product()
+@app.route("/customers/<id>/orders", methods=["GET"])
+def get_orders_by_customer_id(id):
+    con = sql.connect("msprDev")
+    order_db = OrderDB(con)
+    rows = order_db.get_order_by_id(id)  
+    con.close() 
+    return rows
+    
 
 
 if __name__ == "__main__":

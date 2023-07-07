@@ -53,8 +53,5 @@ class Product:
         
     
     def __repr__(self):
-        return f'[id={self.id}, date={self.created_at}, CustomerId={self.customer_id}]'
-
-
-def json__to_product(json_product):
-    pass   
+        return f'[id={self.id}, productDate={self.product_date}, price={self.price}, description={self.description}, color={self.color}, stock={self.stock}]'
+   
