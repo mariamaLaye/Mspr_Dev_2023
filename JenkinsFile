@@ -20,7 +20,7 @@ pipeline {
                         // Loop through each Python file
                         for (def file in pythonFiles) {
                             bat 'echo "Building..."'
-                            bat "C:\\python310\\python.exe build.py ${file}"
+                            //bat "C:\\python310\\python.exe build.py ${file}"
                             
                         }
                     }
